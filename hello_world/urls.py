@@ -17,10 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from hello_world_app.api import GraphWithUserViewSet
+from django.urls import path, include, re_path
+from rest_framework.authtoken import views
+
+
 router = routers.DefaultRouter()
 router.register(r'Graph', GraphWithUserViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    re_path(r'^api-token-auth/', views.obtain_auth_token),
 ]
