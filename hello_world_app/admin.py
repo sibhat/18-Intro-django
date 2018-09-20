@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Graph
+from .models import Graph, GraphWithUser
 # Register your models here.
 
 class GraphAdmin(admin.ModelAdmin):
@@ -8,3 +8,4 @@ class GraphAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at', 'last_modified')
 
 admin.site.register(Graph, GraphAdmin)
+admin.site.register(GraphWithUser)

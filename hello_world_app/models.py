@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from uuid import uuid4
 # Create your models here.
 class Graph(models.Model):
@@ -16,3 +17,7 @@ class Graph(models.Model):
 
     def __repr__(self):
         return f"{title}"
+
+
+class GraphWithUser(Graph): #inherits all field from Graph
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
