@@ -10,9 +10,9 @@ class GraphType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    Graphs = graphene.List(GraphType)
+    Graph = graphene.List(GraphType)
 
-    def resolve_Graphs(self, info):
+    def resolve_Graph(self, info):
         return GraphWithUser.objects.filter(user=info.context.user)
 
 

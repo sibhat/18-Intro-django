@@ -16,10 +16,13 @@ class Graph(models.Model):
     # auto_now_add only set date at creatation
     last_modified = models.DateTimeField(auto_now=True)
     # autp_now set time at create and update
-
+    class Meta:
+        verbose_name_plural = "Graph"
     def __repr__(self):
         return f"{self.title}"
 
 
 class GraphWithUser(Graph):  # inherits all field from Graph
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    class Meta:
+        verbose_name_plural = "Personal Graph"

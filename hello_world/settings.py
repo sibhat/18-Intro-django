@@ -131,5 +131,6 @@ REST_FRAMEWORK = {
 }
 
 GRAPHENE = {
-    'SCHEMA': 'hello_world_app.schema.schema'  # Where your Graphene schema lives
+    'SCHEMA': 'hello_world_app.schema.schema'  
+    # Where your Graphene schema lives
 }
