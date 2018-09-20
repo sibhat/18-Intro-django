@@ -16,4 +16,28 @@ class Query(graphene.ObjectType):
         return GraphWithUser.objects.filter(user=info.context.user)
 
 
-schema = graphene.Schema(query=Query)
+class CreateGraphWithUser(graphene.Mutation):
+    graph = graphene.Field(GraphType)
+    ok = graphene.Boolean()
+    status = graphene.String()
+
+    class Arguments:
+        title = graphene.String()
+        content = graphene.String()
+
+    def mutate(self, info, title, content):
+        user = info.context.user
+        if user.is_anonymous:
+            return CreateGraphWithUser(ok=False, status="Must be logged in!")
+        else:
+            new_graph = GraphWithUser(title=title, content=content, user=user)
+            new_graph.save()
+            return CreateGraphWithUser(graph=new_graph, ok=True, status="ok")
+
+
+class Mutation(graphene.ObjectType):
+    create_graphWithUser = CreateGraphWithUser.Field()
+
+
+# schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query, mutation=Mutation)
