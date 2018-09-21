@@ -8,11 +8,10 @@ django = "*"
 python-decouple = "*"
 djangorestframework = "*"
 graphene-django = "*"
-
-[dev-packages]
-pylint = "*"
-"autopep8" = "*"
-"flake8" = "*"
+gunicorn = "*"
+"psycopg2-binary" = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
