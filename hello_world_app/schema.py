@@ -1,5 +1,6 @@
 from .models import GraphWithUser
 from graphene_django import DjangoObjectType
+
 import graphene
 
 
@@ -10,10 +11,19 @@ class GraphType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    Graph = graphene.List(GraphType)
+    Graph = graphene.List(GraphType, title=graphene.String(), content=graphene.String())
 
-    def resolve_Graph(self, info):
-        return GraphWithUser.objects.filter(user=info.context.user)
+    def resolve_Graph(self, info, title=None, content=None):
+        user = info.context.user
+        if user.is_anonymous:
+            return GraphWithUser.objects.none()
+        else:
+            if title is not None:
+                return GraphWithUser.objects.filter(user=user, title=title)
+            elif content is not None:
+                return GraphWithUser.objects.filter(user=user, content=content)
+            else:
+                return GraphWithUser.objects.filter(user=user)
 
 
 class CreateGraphWithUser(graphene.Mutation):
@@ -38,6 +48,4 @@ class CreateGraphWithUser(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     create_graphWithUser = CreateGraphWithUser.Field()
 
-
-# schema = graphene.Schema(query=Query)
 schema = graphene.Schema(query=Query, mutation=Mutation)
